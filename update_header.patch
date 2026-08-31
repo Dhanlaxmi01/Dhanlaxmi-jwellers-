@@ -1,0 +1,11 @@
+--- src/components/Header.tsx
++++ src/components/Header.tsx
+@@ -4,6 +4,8 @@
+    Search,
+    Menu,
+    X,
++   ChevronRight,
++   ChevronDown,
+    Crown,
+    ShieldCheck,
+    Settings2,

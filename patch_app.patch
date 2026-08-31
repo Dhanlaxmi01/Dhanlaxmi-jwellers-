@@ -1,0 +1,30 @@
+--- src/App.tsx
++++ src/App.tsx
+@@ -48,6 +48,7 @@
+   // Core Data State
+   const [liveRates, setRates] = useState<LiveRates>(INITIAL_RATES);
+   const [oneHourOldRates, setOneHourOldRates] = useState<LiveRates>(INITIAL_RATES);
++  const [isRatesLoading, setIsRatesLoading] = useState<boolean>(true);
+   const [products, setProducts] = useState<JewelryProduct[]>(INITIAL_PRODUCTS);
+   const [orders, setOrders] = useState<OrderInquiry[]>([]);
+   const [coupons, setCoupons] = useState<Coupon[]>(INITIAL_COUPONS);
+@@ -141,7 +142,10 @@
+     fetch('/api/rates')
+       .then((res) => (res.ok ? res.json() : null))
+       .then((data) => {
+-        if (data) setRates(data);
++        if (data) {
++          setRates(data);
++          setIsRatesLoading(false);
++        }
+       })
+       .catch((err) => console.log('Using local rates cache', err));
+ 
+@@ -370,6 +374,7 @@
+       <RatesTicker
+         rates={oneHourOldRates}
+         settings={settings}
++        isLoading={isRatesLoading}
+         onOpenCalculator={() => setIsCalculatorOpen(true)}
+         onOpenShowroom={() => setIsShowroomOpen(true)}
+       />

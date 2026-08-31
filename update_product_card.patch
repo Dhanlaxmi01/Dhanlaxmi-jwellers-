@@ -1,0 +1,34 @@
+--- src/components/ProductCard.tsx
++++ src/components/ProductCard.tsx
+@@ -10,6 +10,7 @@
+ } from 'lucide-react';
+ import { JewelryProduct, LiveRates } from '../types';
+ import { calculateProductPrice, formatINR } from '../utils/pricing';
++import { Skeleton } from './Skeleton';
+ 
+ interface ProductCardProps {
+   product: JewelryProduct;
+@@ -32,6 +33,7 @@
+   const [isHovered, setIsHovered] = useState(false);
+   const [addedAnim, setAddedAnim] = useState(false);
+   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
++  const [imgLoaded, setImgLoaded] = useState(false);
+ 
+   const priceBreakdown = calculateProductPrice(product, rates);
+ 
+@@ -74,10 +76,14 @@
+          className="relative w-full aspect-square bg-[#FBF9F5] overflow-hidden cursor-pointer"
+         onClick={() => onQuickView(product)}
+       >
++        {!imgLoaded && (
++          <Skeleton className="absolute inset-0 w-full h-full" />
++        )}
+         <img
+           src={product.images[currentImgIndex] || product.images[0]}
+           alt={product.name}
+-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
++          className={`w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-110 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
++          onLoad={() => setImgLoaded(true)}
+           loading="lazy"
+         />
+ 
